@@ -37,8 +37,8 @@ class SaveThrow(BaseThrow):
   def __init__(self, name: str, stat: str, **kwargs):
     super().__init__(name,
                      stat,
-                     type="save-throw",
-                     section="save-throws",
+                     type="saving-throw",
+                     section="saving-throws",
                      value=0,
                      roll=f"{name.capitalize()} save: {{1d20 + {name}}}", **kwargs)
 
