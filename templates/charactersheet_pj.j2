@@ -1,0 +1,231 @@
+{
+  "stats": {
+    "STR": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((STR-score - 10) / 2)"
+    },
+
+    "STR-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "STR"
+    },
+
+    "DEX": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((DEX-score - 10) / 2)"
+    },
+
+    "DEX-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "DEX"
+    },
+
+    "CON": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((CON-score - 10) / 2)"
+    },
+
+    "CON-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "CON"
+    },
+
+    "INT": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((INT-score - 10) / 2)"
+    },
+
+    "INT-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "INT"
+    },
+
+    "WIS": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((WIS-score - 10) / 2)"
+    },
+
+    "WIS-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "WIS"
+    },
+
+    "CHA": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((CHA-score - 10) / 2)"
+    },
+
+    "CHA-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "CHA"
+    },
+
+  {% for t in throws %}
+    "{{t.name}}": { {#Ultra Generic block#}
+      "expression": "{{t.stat|upper}} + {{t.name}}-prof + {{t.name}}-items-modifiers {% if 'is_armor_dependant' in t -%}+ armor-check-penalty{%- endif -%}"
+      {%- for key, value in t.items()%}
+      {%- if value is defined and key not in blacklisted_keys %},{#Previous line comma#}
+      "{{key}}": "{{value}}"
+        {%- endif -%}
+      {% endfor %}
+    },
+    "{{t.name}}-trained": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-expert": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-master": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-legendary": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-items-modifiers": {
+      "value": 0,
+      "type": "number",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-prof": {
+      "value": 0,
+      "expression": "{{t.name}}-prof-base ? ({{t.name}}-prof-base + level) : 0",
+      "type": "number",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-prof-base": {
+      "value": 0,
+      "expression": "{{t.name}}-legendary ? 8 : {{t.name}}-master ? 6 : {{t.name}}-expert ? 4 : {{t.name}}-trained ? 2 : 0",
+      "type": "number",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+  {%endfor%}
+    "hit-points-maximum": {
+      "value": 20,
+      "section": "info",
+      "type": "number",
+      "hidden": true,
+      "parent": "hit-points"
+    },
+    "hit-points": {
+      "value": 20,
+      "section": "info",
+      "type": "health",
+      "local": true
+    },
+    "AC": {
+      "value": 16,
+      "type": "text",
+      "section": "info",
+      "expression": "10 + 2 + trained + DEX"
+    },
+    "class": {
+      "value": "",
+      "section": "info",
+      "type": "text"
+    },
+    "level": {
+      "value": 2,
+      "section": "info",
+      "type": "number"
+    },
+    "armor-check-penalty": {
+      "value": 0,
+      "section": "info",
+      "type": "number"
+    }
+  },
+
+  "info": {
+    "description": "",
+    "notes": "",
+    "sections": [
+      {
+        "name": "abilities",
+        "position": "left",
+        "tab": 1
+      },
+
+      {
+        "name": "info",
+        "position": "left",
+        "tab": 1
+      },
+
+      {
+        "name": "details",
+        "position": "left",
+        "tab": 3
+      },
+
+      {
+        "name": "saving-throws",
+        "position": "right",
+        "tab": 2
+      },
+
+      {
+        "name": "perception",
+        "position": "right",
+        "tab": 2
+      },
+
+      {
+        "name": "skills",
+        "position": "right",
+        "tab": 2
+      },
+
+      {
+        "name": "messages",
+        "position": "bottom",
+        "tab": 4,
+        "savedMessages": true
+      }
+    ]
+  },
+
+  "appearances": [
+    "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/4a8f962abcddd0d7be0da0d2c6700061.png",
+    "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/505cd0a772c8f0de75f52886ea33ec83.png"
+  ],
+  "savedMessages": []
+}
