@@ -138,6 +138,47 @@
       "parent": "{{t.name}}"
     },
   {%endfor%}
+  
+  {# Generate proficiencies level for different attack types#}
+  {% for t in ["simple", "martial", "other-a", "other-b"] %}
+    "{{t}}-prof": {
+      "value": 0,
+      "expression": "{{t}}-prof-base ? ({{t}}-prof-base + level) : 0",
+      "type": "number",
+      "section": "attacks"
+    },
+    "{{t}}-trained": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t}}-prof"
+    },
+    "{{t}}-expert": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t}}-prof"
+    },
+    "{{t}}-master": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t}}-prof"
+    },
+    "{{t}}-legendary": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t}}-prof"
+    },
+    "{{t}}-prof-base": {
+      "value": 0,
+      "expression": "{{t}}-legendary ? 8 : {{t}}-master ? 6 : {{t}}-expert ? 4 : {{t}}-trained ? 2 : 0",
+      "type": "number",
+      "hidden": true,
+      "parent": "{{t}}-prof"
+    },
+  {% endfor %}
     "hit-points-maximum": {
       "value": 20,
       "section": "info",
@@ -213,9 +254,20 @@
         "position": "right",
         "tab": 2
       },
-
       {
         "name": "messages",
+        "position": "bottom",
+        "tab": 4,
+        "savedMessages": true
+      },
+      {
+        "name": "attacks",
+        "position": "bottom",
+        "tab": 4,
+        "savedMessages": true
+      },
+      {
+        "name": "spells",
         "position": "bottom",
         "tab": 4,
         "savedMessages": true
@@ -227,5 +279,21 @@
     "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/4a8f962abcddd0d7be0da0d2c6700061.png",
     "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/505cd0a772c8f0de75f52886ea33ec83.png"
   ],
-  "savedMessages": []
+  "savedMessages": [
+      {
+      "name": "melee example 1",
+      "message": "Greataxe: {1d20 + martial-prof + str} to hit, {1d12} slashing",
+      "section": "attacks"
+    },
+    {
+      "name": "melee example 2 (finess)",
+      "message": "Shortsword: {1d20 + simple-prof + @:max(str,dex):} to hit, {1d4 + @:max(str,dex):} piercing",
+      "section": "attacks"
+    },
+    {
+      "name": "ranged example",
+      "message": "Rapier: {1d20 + @:max(str,dex):} to hit, {1d8 + @:max(str,dex):} piercing",
+      "section": "attacks"
+    }
+  ]
 }

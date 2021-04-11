@@ -162,13 +162,40 @@
         "position": "bottom",
         "tab": 4,
         "savedMessages": true
+        },
+      {
+        "name": "actions",
+        "position": "bottom",
+        "tab": 4,
+        "savedMessages": true
+      },
+      {
+        "name": "spells",
+        "position": "bottom",
+        "tab": 4,
+        "savedMessages": true
       }
     ]
   },
-
   "appearances": [
     "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/4a8f962abcddd0d7be0da0d2c6700061.png",
     "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/505cd0a772c8f0de75f52886ea33ec83.png"
   ],
-  "savedMessages": []
+  "savedMessages": [
+    {
+      "name": "melee attack 1",
+      "message": "Greataxe: {1d20 + prof + str} to hit, {1d12} slashing",
+      "section": "actions"
+    },
+    {
+      "name": "melee attack 2 (finess)",
+      "message": "Shortsword: {1d20 + @:max(str,dex):} to hit, {1d4 + @:max(str,dex):} piercing",
+      "section": "actions"
+    },
+    {
+      "name": "ranged weapon example",
+      "message": "Rapier: {1d20 + prof + @:max(str,dex):} to hit, {1d8 + @:max(str,dex):} piercing",
+      "section": "actions"
+    }
+  ]
 }
