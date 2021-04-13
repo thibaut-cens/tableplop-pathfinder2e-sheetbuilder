@@ -83,11 +83,10 @@
       "hidden": true,
       "parent": "CHA"
     },
-
   {% for t in throws %}
     "{{t.name}}": { {#Ultra Generic block#}
       "expression": "{{t.stat|upper}} + {{t.name}}-prof + {{t.name}}-items-modifiers {% if 'is_armor_dependant' in t -%}+ armor-check-penalty{%- endif -%}"
-      {%- for key, value in t.items()%}
+      {%- for key, value in t.items() %}
       {%- if value is defined and key not in blacklisted_keys %},{#Previous line comma#}
       "{{key}}": "{{value}}"
         {%- endif -%}
@@ -125,14 +124,7 @@
     },
     "{{t.name}}-prof": {
       "value": 0,
-      "expression": "{{t.name}}-prof-base ? ({{t.name}}-prof-base + level) : 0",
-      "type": "number",
-      "hidden": true,
-      "parent": "{{t.name}}"
-    },
-    "{{t.name}}-prof-base": {
-      "value": 0,
-      "expression": "{{t.name}}-legendary ? 8 : {{t.name}}-master ? 6 : {{t.name}}-expert ? 4 : {{t.name}}-trained ? 2 : 0",
+      "expression": "{{t.name}}-legendary ? 8 + level : {{t.name}}-master ? 6 + level : {{t.name}}-expert ? 4 + level : {{t.name}}-trained ? 2 + level : 0",
       "type": "number",
       "hidden": true,
       "parent": "{{t.name}}"
@@ -140,43 +132,37 @@
   {%endfor%}
   
   {# Generate proficiencies level for different attack types#}
-  {% for t in ["simple", "martial", "other-a", "other-b"] %}
-    "{{t}}-prof": {
-      "value": 0,
-      "expression": "{{t}}-prof-base ? ({{t}}-prof-base + level) : 0",
-      "type": "number",
-      "section": "attacks"
+  {% for t in ["simple-weapons", "martial-weapons", "other-weapons-a", "other-weapons-b"] %}
+    "{{t}}": {
+      "value": 1,
+      "type": "skill4",
+      "section": "actions",
+      "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
+      "subtitle": ""
     },
     "{{t}}-trained": {
       "value": false,
       "type": "checkbox",
       "hidden": true,
-      "parent": "{{t}}-prof"
+      "parent": "Test"
     },
     "{{t}}-expert": {
       "value": false,
       "type": "checkbox",
       "hidden": true,
-      "parent": "{{t}}-prof"
+      "parent": "Test"
     },
     "{{t}}-master": {
       "value": false,
       "type": "checkbox",
       "hidden": true,
-      "parent": "{{t}}-prof"
+      "parent": "Test"
     },
     "{{t}}-legendary": {
       "value": false,
       "type": "checkbox",
       "hidden": true,
-      "parent": "{{t}}-prof"
-    },
-    "{{t}}-prof-base": {
-      "value": 0,
-      "expression": "{{t}}-legendary ? 8 : {{t}}-master ? 6 : {{t}}-expert ? 4 : {{t}}-trained ? 2 : 0",
-      "type": "number",
-      "hidden": true,
-      "parent": "{{t}}-prof"
+      "parent": "Test"
     },
   {% endfor %}
     "hit-points-maximum": {
@@ -261,7 +247,7 @@
         "savedMessages": true
       },
       {
-        "name": "attacks",
+        "name": "actions",
         "position": "bottom",
         "tab": 4,
         "savedMessages": true
@@ -283,17 +269,17 @@
       {
       "name": "melee example 1",
       "message": "Greataxe: {1d20 + martial-prof + str} to hit, {1d12} slashing",
-      "section": "attacks"
+      "section": "actions"
     },
     {
       "name": "melee example 2 (finess)",
       "message": "Shortsword: {1d20 + simple-prof + @:max(str,dex):} to hit, {1d4 + @:max(str,dex):} piercing",
-      "section": "attacks"
+      "section": "actions"
     },
     {
       "name": "ranged example",
       "message": "Rapier: {1d20 + @:max(str,dex):} to hit, {1d8 + @:max(str,dex):} piercing",
-      "section": "attacks"
+      "section": "actions"
     }
   ]
 }

@@ -1,7 +1,6 @@
 # /bin/python3
 import os
 import sys
-import argparse
 
 
 class BaseThrow(dict):
@@ -9,10 +8,11 @@ class BaseThrow(dict):
   stat: str
   subtitle: str
 
-  def __init__(self, name: str, stat: str, **kwargs):
+  def __init__(self, name: str, stat: str, type : str = "skill4", **kwargs):
     self.name = name
     self.stat = stat
-    self.subtitle = stat.capitalize()
+    self.type = type
+    # self.subtitle = stat.capitalize()
 
     for key, value in kwargs.items():
       setattr(self, key, value)
@@ -22,7 +22,7 @@ class BaseThrow(dict):
 
 
 class GenericThrow(BaseThrow):
-  def __init__(self, name: str, stat: str, type="number", **kwargs):
+  def __init__(self, name: str, stat: str, type="skill4", **kwargs):
     super().__init__(name,
                      stat,
                      **kwargs,
@@ -37,7 +37,6 @@ class SaveThrow(BaseThrow):
   def __init__(self, name: str, stat: str, **kwargs):
     super().__init__(name,
                      stat,
-                     type="saving-throw",
                      section="saving-throws",
                      value=0,
                      roll=f"{name.capitalize()} save: {{1d20 + {name}}}", **kwargs)
@@ -50,7 +49,6 @@ class SkillThrow(BaseThrow):
   def __init__(self, name: str, stat: str, **kwargs):
     super().__init__(name,
                      stat,
-                     type="skill",
                      section="skills",
                      value=0,
                      roll=f"{name.capitalize()} roll: {{1d20 + {name}}}", **kwargs)
@@ -67,6 +65,7 @@ def generateTemplate(inpt, outpt, **kwargs):
 
 
 if __name__ == "__main__":
+  import argparse
   parser = argparse.ArgumentParser()
   parser.add_argument("-t",
                       "--template",
@@ -84,7 +83,7 @@ if __name__ == "__main__":
       SaveThrow("fortitude", "con"),
       SaveThrow("reflex", "dex"),
       SaveThrow("will", "wis"),
-      GenericThrow("perception", "wis", type="number", section="perception"),
+      GenericThrow("perception", "wis", section="perception"),
 
       SkillThrow("acrobatics", "dex", is_armor_dependant=True),
       SkillThrow("arcana", "int"),
@@ -102,11 +101,11 @@ if __name__ == "__main__":
       SkillThrow("stealth", "dex", is_armor_dependant=True),
       SkillThrow("survival", "wis"),
       SkillThrow("thievery", "dex", is_armor_dependant=True),
-      SkillThrow("a-lore", "int"),
-      SkillThrow("b-lore", "int"),
+      SkillThrow("lore-a", "int"),
+      SkillThrow("lore-b", "int"),
   ]
-  blacklisted_keys = ["name", "is_armor_dependant"]
-
+  throwList.sort(key=lambda obj: obj.name)
   throws = [t.__dict__ for t in throwList]
+  blacklisted_keys = ["name", "is_armor_dependant"]
 
   generateTemplate(args.template, args.output, throws=throws, blacklisted_keys=blacklisted_keys)
