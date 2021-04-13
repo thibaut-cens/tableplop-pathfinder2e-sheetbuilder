@@ -1,0 +1,350 @@
+{
+  "stats": {
+    "FOR": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((FOR-score - 10) / 2)"
+    },
+
+    "FOR-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "FOR"
+    },
+
+    "DEX": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((DEX-score - 10) / 2)"
+    },
+
+    "DEX-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "DEX"
+    },
+
+    "CON": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((CON-score - 10) / 2)"
+    },
+
+    "CON-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "CON"
+    },
+
+    "INT": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((INT-score - 10) / 2)"
+    },
+
+    "INT-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "INT"
+    },
+
+    "SAG": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((SAG-score - 10) / 2)"
+    },
+
+    "SAG-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "SAG"
+    },
+
+    "CHA": {
+      "value": 0,
+      "type": "ability",
+      "section": "abilities",
+      "expression": "floor ((CHA-score - 10) / 2)"
+    },
+
+    "CHA-score": {
+      "value": 10,
+      "type": "number",
+      "hidden": true,
+      "parent": "CHA"
+    },
+  {% for t in throws %}
+    "{{t.name}}": { {#Ultra Generic block#}
+      "expression": "{{t.stat|upper}} + {{t.name}}-prof + {{t.name}}-items-modifiers {% if 'is_armor_dependant' in t -%}+ armor-check-penalty{%- endif -%}"
+      {%- for key, value in t.items() %}
+      {%- if value is defined and key not in blCAklisted_keys %},{#Previous line comma#}
+      "{{key}}": "{{value}}"
+        {%- endif -%}
+      {% endfor %}
+    },
+    "{{t.name}}-trained": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-expert": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-master": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-legendary": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-items-modifiers": {
+      "value": 0,
+      "type": "number",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+    "{{t.name}}-prof": {
+      "value": 0,
+      "expression": "{{t.name}}-legendary ? 8 + level : {{t.name}}-master ? 6 + level : {{t.name}}-expert ? 4 + level : {{t.name}}-trained ? 2 + level : 0",
+      "type": "number",
+      "hidden": true,
+      "parent": "{{t.name}}"
+    },
+  {%endfor%}
+  
+  {# Generate proficiencies level for different attCAk types#}
+  {% for t in ["simple", "martial"] %}
+    "{{t}}": {
+      "value": 1,
+      "type": "skill4",
+      "section": "armes",
+      "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
+      "subtitle": ""
+    },
+    "{{t}}-trained": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-expert": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-master": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-legendary": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+  {% endfor %}
+
+    {# Generate proficiencies level for different attCAk types#}
+  {% for t in ["unarmored", "light", "medium", "heavy"] %}
+    "{{t}}": {
+      "value": 1,
+      "type": "skill4",
+      "section": "armures",
+      "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
+      "subtitle": ""
+    },
+    "{{t}}-trained": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-expert": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-master": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-legendary": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+  {% endfor %}
+
+    "hit-points-maximum": {
+      "value": 20,
+      "section": "info",
+      "type": "number",
+      "hidden": true,
+      "parent": "hit-points"
+    },
+    "hit-points": {
+      "value": 20,
+      "section": "info",
+      "type": "health",
+      "local": true
+    },
+    "armor-check-penalty": {
+      "value": 0,
+      "section": "armor",
+      "type": "number"
+    },
+    "CA": {
+      "value": 16,
+      "type": "number",
+      "section": "info",
+      "expression": "10 + unarmored + DEX + CA-bonuses + CA-armor-bonus + CA-penalties"
+    },
+    "CA-armor-bonus": {
+      "value": 0,
+      "type": "number",
+      "hidden": "true",
+      "parent": "CA"
+    },
+    "CA-bonuses": {
+      "value": 0,
+      "type": "number",
+      "hidden": "true",
+      "parent": "CA"
+    },
+    "CA-penalties": {
+      "value": 0,
+      "type": "number",
+      "hidden": "true",
+      "parent": "CA"
+    },
+    "class": {
+      "value": "",
+      "section": "info",
+      "type": "text"
+    },
+    "level": {
+      "value": 1,
+      "section": "info",
+      "type": "number"
+    },
+    "speed": {
+      "value": 25,
+      "section": "info",
+      "type": "number",
+      "subtitle": "ft"
+    },
+    "inventory": {
+      "value": "",
+      "section": "details",
+      "type": "textarea",
+      "subtitle": ""
+    }
+  },
+
+  "info": {
+    "description": "",
+    "notes": "",
+    "sections": [
+      {
+        "name": "abilities",
+        "position": "left",
+        "tab": 1
+      },
+      {
+        "name": "info",
+        "position": "left",
+        "tab": 1
+      },
+      {
+        "name": "saving-throws",
+        "position": "right",
+        "tab": 2
+      },
+      {
+        "name": "perception",
+        "position": "right",
+        "tab": 2
+      },
+      {
+        "name": "skills",
+        "position": "right",
+        "tab": 2
+      },
+      {
+        "name": "armures",
+        "position": "bottom",
+        "tab": 3,
+        "savedMessages": true
+      },
+      {
+        "name": "armes",
+        "position": "bottom",
+        "tab": 3,
+        "savedMessages": true
+      },
+      {
+        "name": "talents",
+        "position": "bottom",
+        "tab": 3,
+        "savedMessages": true
+      },
+      {
+        "name": "spells",
+        "position": "bottom",
+        "tab": 3,
+        "savedMessages": true
+      },
+      {
+        "name": "details",
+        "position": "left",
+        "tab": 4
+      }
+    ]
+  },
+
+  "appearances": [
+  ],
+  "savedMessages": [
+      {
+      "name": "melee example 1",
+      "message": "Greataxe: {1d20 + martial-prof + FOR} to hit, {1d12} slashing",
+      "section": "CAtions"
+    },
+    {
+      "name": "melee example 2 (finess)",
+      "message": "Shortsword: {1d20 + simple-prof + @:max(FOR,dex):} to hit, {1d4 + @:max(FOR,dex):} piercing",
+      "section": "CAtions"
+    },
+    {
+      "name": "ranged example",
+      "message": "Rapier: {1d20 + @:max(FOR,dex):} to hit, {1d8 + @:max(FOR,dex):} piercing",
+      "section": "CAtions"
+    }
+  ]
+}
