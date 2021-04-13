@@ -132,11 +132,11 @@
   {%endfor%}
   
   {# Generate proficiencies level for different attack types#}
-  {% for t in ["simple-weapons", "martial-weapons", "other-weapons-a", "other-weapons-b"] %}
+  {% for t in ["simple", "martial"] %}
     "{{t}}": {
       "value": 1,
       "type": "skill4",
-      "section": "actions",
+      "section": "weapons",
       "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
       "subtitle": ""
     },
@@ -165,6 +165,42 @@
       "parent": "Test"
     },
   {% endfor %}
+
+    {# Generate proficiencies level for different attack types#}
+  {% for t in ["unarmored", "light", "medium", "heavy"] %}
+    "{{t}}": {
+      "value": 1,
+      "type": "skill4",
+      "section": "armors",
+      "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
+      "subtitle": ""
+    },
+    "{{t}}-trained": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-expert": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-master": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+    "{{t}}-legendary": {
+      "value": false,
+      "type": "checkbox",
+      "hidden": true,
+      "parent": "Test"
+    },
+  {% endfor %}
+
     "hit-points-maximum": {
       "value": 20,
       "section": "info",
@@ -178,11 +214,34 @@
       "type": "health",
       "local": true
     },
+    "armor-check-penalty": {
+      "value": 0,
+      "section": "armor",
+      "type": "number"
+    },
     "AC": {
       "value": 16,
-      "type": "text",
+      "type": "number",
       "section": "info",
-      "expression": "10 + 2 + trained + DEX"
+      "expression": "10 + unarmored + DEX + AC-bonuses + AC-armor-bonus + AC-penalties"
+    },
+    "AC-armor-bonus": {
+      "value": 0,
+      "type": "number",
+      "hidden": "true",
+      "parent": "AC"
+    },
+    "AC-bonuses": {
+      "value": 0,
+      "type": "number",
+      "hidden": "true",
+      "parent": "AC"
+    },
+    "AC-penalties": {
+      "value": 0,
+      "type": "number",
+      "hidden": "true",
+      "parent": "AC"
     },
     "class": {
       "value": "",
@@ -190,14 +249,21 @@
       "type": "text"
     },
     "level": {
-      "value": 2,
+      "value": 1,
       "section": "info",
       "type": "number"
     },
-    "armor-check-penalty": {
-      "value": 0,
+    "speed": {
+      "value": 25,
       "section": "info",
-      "type": "number"
+      "type": "number",
+      "subtitle": "ft"
+    },
+    "inventory": {
+      "value": "",
+      "section": "details",
+      "type": "textarea",
+      "subtitle": ""
     }
   },
 
@@ -210,60 +276,59 @@
         "position": "left",
         "tab": 1
       },
-
       {
         "name": "info",
         "position": "left",
         "tab": 1
       },
-
-      {
-        "name": "details",
-        "position": "left",
-        "tab": 3
-      },
-
       {
         "name": "saving-throws",
         "position": "right",
         "tab": 2
       },
-
       {
         "name": "perception",
         "position": "right",
         "tab": 2
       },
-
       {
         "name": "skills",
         "position": "right",
         "tab": 2
       },
       {
-        "name": "talents",
+        "name": "armors",
         "position": "bottom",
-        "tab": 4,
+        "tab": 3,
         "savedMessages": true
       },
       {
-        "name": "actions",
+        "name": "weapons",
         "position": "bottom",
-        "tab": 4,
+        "tab": 3,
+        "savedMessages": true
+      },
+      {
+        "name": "talents",
+        "position": "bottom",
+        "tab": 3,
         "savedMessages": true
       },
       {
         "name": "spells",
         "position": "bottom",
-        "tab": 4,
+        "tab": 3,
         "savedMessages": true
+      },
+      {
+        "name": "details",
+        "position": "left",
+        "tab": 4
       }
     ]
   },
 
   "appearances": [
-    "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/4a8f962abcddd0d7be0da0d2c6700061.png",
-    "https://tableplop-files-prod.nyc3.cdn.digitaloceanspaces.com/505cd0a772c8f0de75f52886ea33ec83.png"
   ],
   "savedMessages": [
       {
