@@ -1,23 +1,23 @@
 {
   "stats": {
-    "STR": {
+    "FOR": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
-      "expression": "floor ((STR-score - 10) / 2)"
+      "section": "compétences",
+      "expression": "floor ((FOR-score - 10) / 2)"
     },
 
-    "STR-score": {
+    "FOR-score": {
       "value": 10,
       "type": "number",
       "hidden": true,
-      "parent": "STR"
+      "parent": "FOR"
     },
 
     "DEX": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((DEX-score - 10) / 2)"
     },
 
@@ -31,7 +31,7 @@
     "CON": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((CON-score - 10) / 2)"
     },
 
@@ -45,7 +45,7 @@
     "INT": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((INT-score - 10) / 2)"
     },
 
@@ -59,7 +59,7 @@
     "WIS": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((WIS-score - 10) / 2)"
     },
 
@@ -73,7 +73,7 @@
     "CHA": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((CHA-score - 10) / 2)"
     },
 
@@ -110,7 +110,7 @@
       "type": "number",
       "section": "info"
     },
-    "level": {
+    "niveau": {
       "value": 2,
       "section": "info",
       "type": "number"
@@ -122,7 +122,7 @@
     "notes": "",
     "sections": [
       {
-        "name": "abilities",
+        "name": "compétences",
         "position": "left",
         "tab": 1
       },
@@ -140,7 +140,7 @@
       },
 
       {
-        "name": "saving-throws",
+        "name": "jets-de-sauvegarde",
         "position": "right",
         "tab": 2
       },
@@ -170,7 +170,7 @@
         "savedMessages": true
       },
       {
-        "name": "spells",
+        "name": "sorts",
         "position": "bottom",
         "tab": 4,
         "savedMessages": true
@@ -184,17 +184,17 @@
   "savedMessages": [
     {
       "name": "melee attack 1",
-      "message": "Greataxe: {1d20 + prof + str} to hit, {1d12} slashing",
+      "message": "Greataxe: {1d20 + prof + FOR} to hit, {1d12} slashing",
       "section": "actions"
     },
     {
       "name": "melee attack 2 (finess)",
-      "message": "Shortsword: {1d20 + @:max(str,dex):} to hit, {1d4 + @:max(str,dex):} piercing",
+      "message": "Shortsword: {1d20 + @:max(FOR,dex):} to hit, {1d4 + @:max(FOR,dex):} piercing",
       "section": "actions"
     },
     {
       "name": "ranged weapon example",
-      "message": "Rapier: {1d20 + prof + @:max(str,dex):} to hit, {1d8 + @:max(str,dex):} piercing",
+      "message": "Rapier: {1d20 + prof + @:max(FOR,dex):} to hit, {1d8 + @:max(FOR,dex):} piercing",
       "section": "actions"
     }
   ]

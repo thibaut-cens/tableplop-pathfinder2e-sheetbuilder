@@ -3,7 +3,7 @@
     "FOR": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((FOR-score - 10) / 2)"
     },
 
@@ -17,7 +17,7 @@
     "DEX": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((DEX-score - 10) / 2)"
     },
 
@@ -31,7 +31,7 @@
     "CON": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((CON-score - 10) / 2)"
     },
 
@@ -45,7 +45,7 @@
     "INT": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((INT-score - 10) / 2)"
     },
 
@@ -59,7 +59,7 @@
     "SAG": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((SAG-score - 10) / 2)"
     },
 
@@ -73,7 +73,7 @@
     "CHA": {
       "value": 0,
       "type": "ability",
-      "section": "abilities",
+      "section": "compétences",
       "expression": "floor ((CHA-score - 10) / 2)"
     },
 
@@ -124,20 +124,20 @@
     },
     "{{t.name}}-prof": {
       "value": 0,
-      "expression": "{{t.name}}-legendary ? 8 + level : {{t.name}}-master ? 6 + level : {{t.name}}-expert ? 4 + level : {{t.name}}-trained ? 2 + level : 0",
+      "expression": "{{t.name}}-legendary ? 8 + niveau : {{t.name}}-master ? 6 + niveau : {{t.name}}-expert ? 4 + niveau : {{t.name}}-trained ? 2 + niveau : 0",
       "type": "number",
       "hidden": true,
       "parent": "{{t.name}}"
     },
   {%endfor%}
   
-  {# Generate proficiencies level for different attCAk types#}
+  {# Generate proficiencies niveau for different attCAk types#}
   {% for t in ["simple", "martial"] %}
     "{{t}}": {
       "value": 1,
       "type": "skill4",
       "section": "armes",
-      "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
+      "expression": "{{t}}-legendary ? 8 + niveau : {{t}}-master ? 6 + niveau : {{t}}-expert ? 4 + niveau : {{t}}-trained ? 2 + niveau : 0",
       "subtitle": ""
     },
     "{{t}}-trained": {
@@ -166,13 +166,13 @@
     },
   {% endfor %}
 
-    {# Generate proficiencies level for different attCAk types#}
-  {% for t in ["unarmored", "light", "medium", "heavy"] %}
+    {# Generate proficiencies niveau for different attCAk types#}
+  {% for t in ["sans-armure", "legere", "moyenne", "lourde"] %}
     "{{t}}": {
       "value": 1,
       "type": "skill4",
       "section": "armures",
-      "expression": "{{t}}-legendary ? 8 + level : {{t}}-master ? 6 + level : {{t}}-expert ? 4 + level : {{t}}-trained ? 2 + level : 0",
+      "expression": "{{t}}-legendary ? 8 + niveau : {{t}}-master ? 6 + niveau : {{t}}-expert ? 4 + niveau : {{t}}-trained ? 2 + niveau : 0",
       "subtitle": ""
     },
     "{{t}}-trained": {
@@ -243,23 +243,23 @@
       "hidden": "true",
       "parent": "CA"
     },
-    "class": {
+    "classe": {
       "value": "",
       "section": "info",
       "type": "text"
     },
-    "level": {
+    "niveau": {
       "value": 1,
       "section": "info",
       "type": "number"
     },
-    "speed": {
+    "vitesse": {
       "value": 25,
       "section": "info",
       "type": "number",
-      "subtitle": "ft"
+      "subtitle": "m"
     },
-    "inventory": {
+    "inventaire": {
       "value": "",
       "section": "details",
       "type": "textarea",
@@ -272,7 +272,7 @@
     "notes": "",
     "sections": [
       {
-        "name": "abilities",
+        "name": "compétences",
         "position": "left",
         "tab": 1
       },
@@ -282,7 +282,7 @@
         "tab": 1
       },
       {
-        "name": "saving-throws",
+        "name": "jets-de-sauvegarde",
         "position": "right",
         "tab": 2
       },
@@ -315,7 +315,7 @@
         "savedMessages": true
       },
       {
-        "name": "spells",
+        "name": "sorts",
         "position": "bottom",
         "tab": 3,
         "savedMessages": true
@@ -333,17 +333,17 @@
   "savedMessages": [
       {
       "name": "melee example 1",
-      "message": "Greataxe: {1d20 + martial-prof + FOR} to hit, {1d12} slashing",
+      "message": "Greataxe: {1d20 + martial + FOR} to hit, {1d12} slashing",
       "section": "CAtions"
     },
     {
       "name": "melee example 2 (finess)",
-      "message": "Shortsword: {1d20 + simple-prof + @:max(FOR,dex):} to hit, {1d4 + @:max(FOR,dex):} piercing",
+      "message": "Shortsword: {1d20 + simple + @:max(FOR,dex):} to hit, {1d4 + @:max(FOR,dex):} piercing",
       "section": "CAtions"
     },
     {
       "name": "ranged example",
-      "message": "Rapier: {1d20 + @:max(FOR,dex):} to hit, {1d8 + @:max(FOR,dex):} piercing",
+      "message": "Crossbow: {1d20 + DEX} to hit, {1d8 + @:max(FOR,dex):} piercing",
       "section": "CAtions"
     }
   ]
